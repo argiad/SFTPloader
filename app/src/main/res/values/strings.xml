@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SFTPloader</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="server_to_device">Server to Device</string>
+    <string name="device_to_server">Device to Server</string>
+    <string name="server_to_server">Server to Server</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-2959070576298669/5183477606</string>
+    <!--<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>   &lt;!&ndash; test &ndash;&gt;-->
+</resources>

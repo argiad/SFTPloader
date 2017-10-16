@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "298187688947",
+    "firebase_url": "https://sftploader.firebaseio.com",
+    "project_id": "sftploader",
+    "storage_bucket": "sftploader.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298187688947:android:f8e7dca2a9839a20",
+        "android_client_info": {
+          "package_name": "software.kanunnikoff.sftploader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298187688947-am6diofpj0mttassvl9gpo8sgkgk191k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "software.kanunnikoff.sftploader",
+            "certificate_hash": "f2755914de369759f5815d37cc8ad14bc9d90456"
+          }
+        },
+        {
+          "client_id": "298187688947-8gbjpjberpc793nmvrhrhsm6c1u0kq8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsQhon9CUwZDoFkjlplc9Uv-O9KeJuQq4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298187688947-8gbjpjberpc793nmvrhrhsm6c1u0kq8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
