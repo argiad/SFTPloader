@@ -12,6 +12,10 @@
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_share"
             android:title="Share" />
+        <item
+            android:id="@+id/nav_apps"
+            android:icon="@drawable/ic_shop_two_black_24px"
+            android:title="@string/view_other_apps" />
     </group>
 
 </menu>

@@ -35,30 +35,30 @@ class ServerToServerFragment : Fragment() {
 
         myView = inflater.inflate(R.layout.fragment_server_to_server, container, false)
 
-        myView!!.findViewById<EditText>(R.id.sourceHostEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_HOST1, ""))
-        myView!!.findViewById<EditText>(R.id.sourcePortEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PORT1, ""))
-        myView!!.findViewById<EditText>(R.id.sourceUserEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_USER1, ""))
-        myView!!.findViewById<EditText>(R.id.sourcePasswordEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PASSWORD1, ""))
-        myView!!.findViewById<EditText>(R.id.sourceFileEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_REMOTE_FILE1, ""))
+        myView!!.findViewById<EditText>(R.id.sourceHostEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_HOST1, ""))
+        myView!!.findViewById<EditText>(R.id.sourcePortEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PORT1, ""))
+        myView!!.findViewById<EditText>(R.id.sourceUserEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_USER1, ""))
+        myView!!.findViewById<EditText>(R.id.sourcePasswordEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PASSWORD1, ""))
+        myView!!.findViewById<EditText>(R.id.sourceFileEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_REMOTE_FILE1, ""))
 
-        myView!!.findViewById<EditText>(R.id.middleLayerFileEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_LOCAL_FILE, ""))
+        myView!!.findViewById<EditText>(R.id.middleLayerFileEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_LOCAL_FILE, ""))
 
-        myView!!.findViewById<EditText>(R.id.destinationHostEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_HOST2, ""))
-        myView!!.findViewById<EditText>(R.id.destinationPortEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PORT2, ""))
-        myView!!.findViewById<EditText>(R.id.destinationUserEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_USER2, ""))
-        myView!!.findViewById<EditText>(R.id.destinationPasswordEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PASSWORD2, ""))
-        myView!!.findViewById<EditText>(R.id.destinationFileEditText).setText(this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_REMOTE_FILE2, ""))
+        myView!!.findViewById<EditText>(R.id.destinationHostEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_HOST2, ""))
+        myView!!.findViewById<EditText>(R.id.destinationPortEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PORT2, ""))
+        myView!!.findViewById<EditText>(R.id.destinationUserEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_USER2, ""))
+        myView!!.findViewById<EditText>(R.id.destinationPasswordEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_PASSWORD2, ""))
+        myView!!.findViewById<EditText>(R.id.destinationFileEditText).setText(this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.S2S_REMOTE_FILE2, ""))
 
         myView!!.findViewById<EditText>(R.id.middleLayerFileEditText).setOnClickListener {
             val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
             intent.putExtra(Intent.EXTRA_TITLE, "fileFromServer")
-            this@ServerToServerFragment.activity.startActivityForResult(intent, WRITE_REQUEST_CODE)
+            this@ServerToServerFragment.activity!!.startActivityForResult(intent, WRITE_REQUEST_CODE)
         }
 
         myView!!.findViewById<Button>(R.id.controlStartStopButton).setOnClickListener { button ->
-            if (!Core.isConnected(this@ServerToServerFragment.activity)) {
+            if (!Core.isConnected(this@ServerToServerFragment.activity!!)) {
                 Toast.makeText(this@ServerToServerFragment.activity, "Check Internet connection!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
@@ -98,9 +98,9 @@ class ServerToServerFragment : Fragment() {
                 myView!!.findViewById<TextView>(R.id.controlSpeedTextView).text = "0 b/s"
 
                 future = executor.submit({
-                    Sftp.Downloader.download(host1, Integer.valueOf(port1), user1, password1, this@ServerToServerFragment.activity.contentResolver.openOutputStream(Uri.parse(localFile)), remoteFile1,
+                    Sftp.Downloader.download(host1, Integer.valueOf(port1), user1, password1, this@ServerToServerFragment.activity!!.contentResolver.openOutputStream(Uri.parse(localFile)), remoteFile1,
                             onStatusChanged = { status, isError ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     val text = myView!!.findViewById<TextView>(R.id.controlLogEditText).text
                                     myView!!.findViewById<TextView>(R.id.controlLogEditText).text = "$text\n$status"
 
@@ -116,7 +116,7 @@ class ServerToServerFragment : Fragment() {
                                 }
                             },
                             onCountChanged = { percent, speed ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     myView!!.findViewById<ProgressBar>(R.id.controlProgressBar).progress = percent
                                     myView!!.findViewById<TextView>(R.id.controlPercentTextView).text = "$percent%"
 
@@ -131,7 +131,7 @@ class ServerToServerFragment : Fragment() {
                                 }
                             },
                             onEnd = { time ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     val text = myView!!.findViewById<TextView>(R.id.controlLogEditText).text
                                     myView!!.findViewById<TextView>(R.id.controlLogEditText).text = "$text\nsuccessfully finished in $time ms"
                                     myView!!.findViewById<TextView>(R.id.controlSpeedTextView).text = "0 b/s"
@@ -142,9 +142,9 @@ class ServerToServerFragment : Fragment() {
                             }
                     )
 
-                    Sftp.Uploader.upload(host2, Integer.valueOf(port2), user2, password2, this@ServerToServerFragment.activity.contentResolver.openInputStream(Uri.parse(localFile)), remoteFile2,
+                    Sftp.Uploader.upload(host2, Integer.valueOf(port2), user2, password2, this@ServerToServerFragment.activity!!.contentResolver.openInputStream(Uri.parse(localFile)), remoteFile2,
                             onStatusChanged = { status, isError ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     val text = myView!!.findViewById<TextView>(R.id.controlLogEditText).text
                                     myView!!.findViewById<TextView>(R.id.controlLogEditText).text = "$text\n$status"
 
@@ -160,7 +160,7 @@ class ServerToServerFragment : Fragment() {
                                 }
                             },
                             onCountChanged = { percent, speed ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     myView!!.findViewById<ProgressBar>(R.id.controlProgressBar).progress = percent
                                     myView!!.findViewById<TextView>(R.id.controlPercentTextView).text = "$percent%"
 
@@ -175,7 +175,7 @@ class ServerToServerFragment : Fragment() {
                                 }
                             },
                             onEnd = { time ->
-                                this@ServerToServerFragment.activity.runOnUiThread {
+                                this@ServerToServerFragment.activity!!.runOnUiThread {
                                     isStarted = false
                                     (button as Button).text = "START"
                                     button.setBackgroundColor(resources.getColor(R.color.colorPrimary))
@@ -186,12 +186,12 @@ class ServerToServerFragment : Fragment() {
                             }
                     )
 
-                    if (DocumentsContract.deleteDocument(this@ServerToServerFragment.activity.contentResolver, Uri.parse(myView!!.findViewById<EditText>(R.id.middleLayerFileEditText).text.toString()))) {
-                        this@ServerToServerFragment.activity.runOnUiThread {
+                    if (DocumentsContract.deleteDocument(this@ServerToServerFragment.activity!!.contentResolver, Uri.parse(myView!!.findViewById<EditText>(R.id.middleLayerFileEditText).text.toString()))) {
+                        this@ServerToServerFragment.activity!!.runOnUiThread {
                             val text = myView!!.findViewById<TextView>(R.id.controlLogEditText).text
                             myView!!.findViewById<TextView>(R.id.controlLogEditText).text = "$text\nmiddle layer file has been deleted from device"
 
-                            val editor = this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
+                            val editor = this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
                             editor.putString(Core.S2S_LOCAL_FILE, "")
                             editor.apply()
 
@@ -210,7 +210,7 @@ class ServerToServerFragment : Fragment() {
     }
 
     override fun onStop() {
-        val editor = this@ServerToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
+        val editor = this@ServerToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
 
         editor.putString(Core.S2S_HOST1, myView!!.findViewById<EditText>(R.id.sourceHostEditText).text.toString())
         editor.putString(Core.S2S_PORT1, myView!!.findViewById<EditText>(R.id.sourcePortEditText).text.toString())

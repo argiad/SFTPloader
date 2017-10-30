@@ -32,25 +32,25 @@ class DeviceToServerFragment : Fragment() {
 
         myView = inflater.inflate(R.layout.fragment_device_to_server, container, false)
 
-        myView!!.findViewById<EditText>(R.id.destinationHostEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_HOST, ""))
-        myView!!.findViewById<EditText>(R.id.destinationPortEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_PORT, ""))
-        myView!!.findViewById<EditText>(R.id.destinationUserEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_USER, ""))
-        myView!!.findViewById<EditText>(R.id.destinationPasswordEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_PASSWORD, ""))
-        myView!!.findViewById<EditText>(R.id.destinationFileEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_REMOTE_FILE, ""))
+        myView!!.findViewById<EditText>(R.id.destinationHostEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_HOST, ""))
+        myView!!.findViewById<EditText>(R.id.destinationPortEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_PORT, ""))
+        myView!!.findViewById<EditText>(R.id.destinationUserEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_USER, ""))
+        myView!!.findViewById<EditText>(R.id.destinationPasswordEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_PASSWORD, ""))
+        myView!!.findViewById<EditText>(R.id.destinationFileEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_REMOTE_FILE, ""))
 
-        myView!!.findViewById<EditText>(R.id.sourceFileEditText).setText(this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_LOCAL_FILE, ""))
+        myView!!.findViewById<EditText>(R.id.sourceFileEditText).setText(this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).getString(Core.D2S_LOCAL_FILE, ""))
 
         myView!!.findViewById<EditText>(R.id.sourceFileEditText).setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "*/*"
 
-            this@DeviceToServerFragment.activity.startActivityForResult(intent, READ_REQUEST_CODE)
+            this@DeviceToServerFragment.activity!!.startActivityForResult(intent, READ_REQUEST_CODE)
         }
 
         myView!!.findViewById<Button>(R.id.controlStartStopButton).setOnClickListener { button ->
-            if (!Core.isConnected(this@DeviceToServerFragment.activity)) {
-                Toast.makeText(this@DeviceToServerFragment.activity, "Check Internet connection!", Toast.LENGTH_LONG).show()
+            if (!Core.isConnected(this@DeviceToServerFragment.activity!!)) {
+                Toast.makeText(this@DeviceToServerFragment.activity!!, "Check Internet connection!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -82,9 +82,9 @@ class DeviceToServerFragment : Fragment() {
                 myView!!.findViewById<TextView>(R.id.controlSpeedTextView).text = "0 b/s"
 
                 future = executor.submit({
-                    Sftp.Uploader.upload(host, Integer.valueOf(port), user, password, this@DeviceToServerFragment.activity.contentResolver.openInputStream(Uri.parse(localFile)), remoteFile,
+                    Sftp.Uploader.upload(host, Integer.valueOf(port), user, password, this@DeviceToServerFragment.activity!!.contentResolver.openInputStream(Uri.parse(localFile)), remoteFile,
                             onStatusChanged = { status, isError ->
-                                this@DeviceToServerFragment.activity.runOnUiThread {
+                                this@DeviceToServerFragment.activity!!.runOnUiThread {
                                     val text = myView!!.findViewById<TextView>(R.id.controlLogEditText).text
                                     myView!!.findViewById<TextView>(R.id.controlLogEditText).text = "$text\n$status"
 
@@ -100,7 +100,7 @@ class DeviceToServerFragment : Fragment() {
                                 }
                             },
                             onCountChanged = { percent, speed ->
-                                this@DeviceToServerFragment.activity.runOnUiThread {
+                                this@DeviceToServerFragment.activity!!.runOnUiThread {
                                     myView!!.findViewById<ProgressBar>(R.id.controlProgressBar).progress = percent
                                     myView!!.findViewById<TextView>(R.id.controlPercentTextView).text = "$percent%"
 
@@ -115,7 +115,7 @@ class DeviceToServerFragment : Fragment() {
                                 }
                             },
                             onEnd = { time ->
-                                this@DeviceToServerFragment.activity.runOnUiThread {
+                                this@DeviceToServerFragment.activity!!.runOnUiThread {
                                     isStarted = false
                                     (button as Button).text = "START"
                                     button.setBackgroundColor(resources.getColor(R.color.colorPrimary))
@@ -137,7 +137,7 @@ class DeviceToServerFragment : Fragment() {
     }
 
     override fun onStop() {
-        val editor = this@DeviceToServerFragment.activity.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
+        val editor = this@DeviceToServerFragment.activity!!.getSharedPreferences(Core.APP_TAG, Context.MODE_PRIVATE).edit()
 
         editor.putString(Core.D2S_HOST, myView!!.findViewById<EditText>(R.id.destinationHostEditText).text.toString())
         editor.putString(Core.D2S_PORT, myView!!.findViewById<EditText>(R.id.destinationPortEditText).text.toString())

@@ -123,6 +123,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.type = "text/plain"
                 startActivity(Intent.createChooser(intent, "Share..."))
             }
+            R.id.nav_apps -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=9118553902079488918")))
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

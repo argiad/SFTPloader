@@ -11,4 +11,6 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-2959070576298669/5183477606</string>
     <!--<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>   &lt;!&ndash; test &ndash;&gt;-->
+
+    <string name="view_other_apps">Other apps</string>
 </resources>
